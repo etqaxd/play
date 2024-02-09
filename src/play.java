@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class play {
-    int choice;
-    Scanner scanner;
-    public void mainMenu(){
-        System.out.println("Основное меню");
+    public static int choice;
+    public static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args){System.out.println("Основное меню");
         System.out.println("1 - Статистика короля");
         System.out.println("2 - нанять войска");
         System.out.println("3 - вывести количество войск");
@@ -22,12 +21,13 @@ public class play {
         }while (choice != 0);
     }
 
-    public void kingStats(int hp, int gold){
+    public static void kingStats(int hp, int gold){
         System.out.println("Статистика короля");
         System.out.println("Золото: " + gold);
         System.out.println("Здоровье: " + hp);
     }
 }
+
 
 class King {
     public static int hpKing;
