@@ -4,39 +4,77 @@ import java.util.List;
 import java.util.Scanner;
 
 public class play {
-    public static int choice;
-    public static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args){System.out.println("Основное меню");
-        System.out.println("1 - Статистика короля");
-        System.out.println("2 - нанять войска");
-        System.out.println("3 - вывести количество войск");
-        System.out.println("4 - отправить войска на битву");
-        scanner.nextInt();
 
-        do{
-            switch(choice){
-                case(1):
+    public static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args){
+        while (true) {
+            System.out.println("Основное меню");
+            System.out.println("1 - Статистика короля");
+            System.out.println("2 - нанять рыцарей");
+            System.out.println("3 - нанять пехоту");
+            System.out.println("4 - вывести количество войск");
+            System.out.println("5 - отправить войска на битву");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case (1):
                     kingStats(King.hpKing, King.gold);
+                    break;
+
+                case (2):
+                    recruitKnights(Knight.knightCost, Knight.hpSoldier, Knight.fsCost, Knight.attackTypeSoldier);
+                    break;
+
+                case(3):
+                    recruitfSoldiers(Knight.knightCost, Knight.hpSoldier, Knight.fsCost, Knight.attackTypeSoldier);
+                    break;
             }
-        }while (choice != 0);
+        }
     }
 
     public static void kingStats(int hp, int gold){
         System.out.println("Статистика короля");
         System.out.println("Золото: " + gold);
         System.out.println("Здоровье: " + hp);
+
     }
+
+    public static void recruitKnights(int hpSoldier, int attackTypeSoldier, int knightCost, int fsCost){
+        if (King.gold > knightCost){
+            King.gold = King.gold - knightCost;
+            Knight knight = new Knight(hpSoldier,attackTypeSoldier,knightCost,fsCost);
+            King.armys.add(knight);
+            System.out.println("+1 knight");
+        }
+        if (King.gold < knightCost)  {
+            System.out.println("Нехвататет золота для найма");
+        }
+    }
+
+    public static void recruitfSoldiers(int hpSoldier, int attackTypeSoldier, int knightCost, int fsCost){
+        if (King.gold > fsCost){
+            King.gold = King.gold - fsCost;
+            FootSoldier footsoldier = new FootSoldier(hpSoldier,attackTypeSoldier,knightCost,fsCost);
+            King.armys.add(footsoldier);
+            System.out.println("+1 foot solider");
+        }
+        if (King.gold < fsCost)  {
+            System.out.println("Нехвататет золота для найма");
+        }
+    }
+
 }
 
 
 class King {
-    public static int hpKing;
-    public static int gold;
+    public static int hpKing = 500;
+    public static int gold = 100;
 
-    private List<Army> armys;
+    public static List<Army> armys = new ArrayList<>();
 
 
-    public King(int hp, int gold){
+    public King(int hpKing, int gold){
         this.hpKing = hpKing;
         this.gold = gold;
         this.armys = new ArrayList<>();
@@ -44,50 +82,35 @@ class King {
 
 
 
-    public void recruitKnights(int hpSoldier, int attackTypeSoldier, int cost){
-     if (gold > cost){
-         gold = gold - cost;
-         Knight knight = new Knight(hpSoldier, attackTypeSoldier, cost);
-         armys.add(knight);
-     }
-     if (gold < cost)  {
-         System.out.println("Нехвататет золота для найма");
-        }
-    }
 
-    public void recruitfSoldiers(int hpSoldier, int attackTypeSoldier, int cost){
-        if (gold > cost){
-            gold = gold - cost;
-            FootSoldier footsoldier = new FootSoldier(hpSoldier, attackTypeSoldier, cost);
-            armys.add(footsoldier);
-        }
-        if (gold < cost)  {
-            System.out.println("Нехвататет золота для найма");
-        }
-    }
 }
 
 class Army{
-    protected int hpSoldier;
-    protected int attackTypeSoldier;
-    protected int cost;
+    public static int hpSoldier;
+    public static int attackTypeSoldier;
+    public static int knightCost;
+    public static int fsCost;
 
-    public Army(int hpSoldier, int attackTypeSoldier, int cost){
+    public Army(int hpSoldier, int attackTypeSoldier, int knightCost, int fsCost){
         this.hpSoldier = hpSoldier;
         this.attackTypeSoldier = attackTypeSoldier;
-        this.cost = cost;
+        this.knightCost = knightCost;
+        this.fsCost = fsCost;
     }
 }
 class Knight extends Army{
- public Knight(int hpSoldier, int attackTypeSoldier, int cost){
-     super(hpSoldier,attackTypeSoldier,cost);
-
+ public Knight(int hpSoldier, int attackTypeSoldier, int knightCost, int fsCost){
+     super(hpSoldier,attackTypeSoldier,knightCost,fsCost);
+     this.knightCost = 30;
+     this.hpSoldier = 45;
  }
 }
 
 class FootSoldier extends Army{
-   public FootSoldier(int hpSoldiers, int attackTypeSoldier, int cost){
-       super(hpSoldiers, attackTypeSoldier,cost);
+   public FootSoldier(int hpSoldiers, int attackTypeSoldier, int knightCost, int fsCost){
+       super(hpSoldiers, attackTypeSoldier,knightCost,fsCost);
+       this.fsCost = 15;
+       this.hpSoldier = 25;
    }
 }
 
