@@ -4,10 +4,12 @@ class Army {
     public static int knightCost;
     public static int fsCost;
 
+
     public Army(int hpSoldier, int attackTypeSoldier, int knightCost, int fsCost) {
         this.hpSoldier = hpSoldier;
         this.attackTypeSoldier = attackTypeSoldier;
         this.knightCost = knightCost;
         this.fsCost = fsCost;
+
     }
 }
